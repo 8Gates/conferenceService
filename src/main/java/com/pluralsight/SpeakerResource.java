@@ -3,11 +3,9 @@ package com.pluralsight;
 import com.pluralsight.model.Speaker;
 import com.pluralsight.repository.SpeakerRepository;
 import com.pluralsight.repository.SpeakerRepositoryStub;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.util.List;
 
@@ -25,5 +23,23 @@ public class SpeakerResource {
     @GET
     public Speaker getSpeaker (@PathParam("id") Long id){
         return speakerRepository.findById(id);
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED) // this is default when not specified
+    @Produces(MediaType.APPLICATION_JSON)
+    public Speaker createSpeakerWithParams(MultivaluedMap<String, String> formParams){
+        System.out.println(formParams.getFirst("name"));
+        System.out.println(formParams.getFirst("company"));
+        return null;
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Speaker createSpeaker(Speaker speaker){
+        System.out.println(speaker.getName());
+        speaker = speakerRepository.create(speaker);
+        return speaker;
     }
 }

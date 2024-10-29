@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SpeakerRepositoryStub implements SpeakerRepository {
-    private final List<Speaker> speakers = new ArrayList<>();
+    private static List<Speaker> speakers = new ArrayList<>();
     public SpeakerRepositoryStub(){
         // no argument constructor for testing purposes
         Speaker speaker1 = new Speaker();
@@ -29,6 +29,13 @@ public class SpeakerRepositoryStub implements SpeakerRepository {
     @Override
     public Speaker findById(Long id) {
         return findSpeakerById(speakers, id);
+    }
+
+    @Override
+    public Speaker create(Speaker speaker) {
+        speaker.setId(speakers.size() + 1L);
+        speakers.add(speaker);
+        return speaker;
     }
 
     private Speaker findSpeakerById(List<Speaker> speakers, Long id) {
