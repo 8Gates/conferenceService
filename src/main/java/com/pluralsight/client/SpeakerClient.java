@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 public class SpeakerClient {
     private Client client;
     private final String SPEAKER_URI = "http://localhost:8080/speaker";
+    private final String SPEAKER_REMOVE_ALL_URI = "http://localhost:8080/speaker/removeall";
 
     public SpeakerClient(){
         client = ClientBuilder.newClient();
@@ -51,25 +52,43 @@ public class SpeakerClient {
         return response.readEntity(Speaker.class);
     }
 
+    private void delete(Long id) {
+        Response response = client
+                .target(SPEAKER_URI)
+                .path(String.valueOf(id))
+                .request(MediaType.APPLICATION_JSON)
+                .delete();
+    }
+
+    private void deleteAll(){
+        Response response = client
+                .target(SPEAKER_REMOVE_ALL_URI)
+                .request(MediaType.APPLICATION_JSON)
+                .delete();
+    }
+
     public static void main (String[] args){
         SpeakerClient client = new SpeakerClient();
-        Speaker speaker = client.get(1L);
-        System.out.println(speaker.getName());
+        Speaker speaker = new Speaker();
+        System.out.println("Number of speakers at start: " + client.get().size());
 
-        List<Speaker> speakers = client.get();
-        // speakers.stream().map(Speaker::getName).forEach(System.out::println);
-        for(Speaker s : speakers){
-            System.out.println(s.getName());
-        }
-
-        speaker = new Speaker();
         speaker.setName("Alexis");
         speaker.setCompany("Amazon");
         speaker = client.post(speaker);
-        System.out.println("SpeakerClient added new speaker "+ speaker.getName());
+        System.out.println("Created speaker id " + speaker.getId() + ", " + speaker.getName() + ", " + speaker.getCompany());
 
+        speaker.setName("XNL-350");
+        speaker.setCompany("Sony");
+        speaker = client.post(speaker);
+        System.out.println("Created speaker id " + speaker.getId() + ", " + speaker.getName() + ", " + speaker.getCompany());
+
+        System.out.println("Number of speakers: " + client.get().size());
         speaker.setCompany("Wayne Enterprises");
         speaker=client.put(speaker);
-        System.out.println("Updated speaker company " + speaker.getCompany());
+        System.out.println("Updated speaker id " + speaker.getId() + ", " + speaker.getName() + ", " + speaker.getCompany());
+
+        System.out.println("Removing all speakers.");
+        client.deleteAll();
+        System.out.println("Number of speakers at end: " + client.get().size());
     }
 }

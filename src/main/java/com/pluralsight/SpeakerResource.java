@@ -25,20 +25,11 @@ public class SpeakerResource {
         return speakerRepository.findById(id);
     }
 
-    @POST
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED) // this is default when not specified
-    @Produces(MediaType.APPLICATION_JSON)
-    public Speaker createSpeakerWithParams(MultivaluedMap<String, String> formParams){
-        System.out.println(formParams.getFirst("name"));
-        System.out.println(formParams.getFirst("company"));
-        return null;
-    }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Speaker createSpeaker(Speaker speaker){
-        System.out.println(speaker.getName());
         speaker = speakerRepository.create(speaker);
         return speaker;
     }
@@ -55,4 +46,19 @@ public class SpeakerResource {
         }
     }
 
+    @Path("{id}")
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public void deleteSpeaker(@PathParam("id") Long id){
+        speakerRepository.delete(id);
+    }
+
+    @DELETE
+    @Path("removeall")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public void deleteAll(){
+        speakerRepository.deleteAll();
+    }
 }

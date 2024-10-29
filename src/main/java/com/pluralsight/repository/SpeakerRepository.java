@@ -12,4 +12,8 @@ public interface SpeakerRepository {
     Speaker create(Speaker speaker);
 
     Speaker update(Speaker speaker);
+
+    void delete(Long id);
+
+    void deleteAll();
 }

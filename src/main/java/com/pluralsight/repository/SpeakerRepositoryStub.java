@@ -9,6 +9,7 @@ public class SpeakerRepositoryStub implements SpeakerRepository {
     private static List<Speaker> speakers = new ArrayList<>();
     public SpeakerRepositoryStub(){
         // no argument constructor for testing purposes
+        /*
         Speaker speaker1 = new Speaker();
         speaker1.setId(1L);
         speaker1.setName("XNL-350");
@@ -20,6 +21,7 @@ public class SpeakerRepositoryStub implements SpeakerRepository {
         speaker2.setName("JBR-8090");
         speaker2.setCompany("Samsung");
         speakers.add(speaker2);
+         */
     }
     @Override
     public List<Speaker> findAll(){
@@ -33,7 +35,7 @@ public class SpeakerRepositoryStub implements SpeakerRepository {
 
     @Override
     public Speaker create(Speaker speaker) {
-        speaker.setId(speakers.size() + 1L);
+        speaker.setId(speakers.size()+1L);
         speakers.add(speaker);
         return speaker;
     }
@@ -46,6 +48,17 @@ public class SpeakerRepositoryStub implements SpeakerRepository {
         storedSpeaker.setCompany(speaker.getCompany());
 
         return storedSpeaker;
+    }
+
+    @Override
+    public void delete(Long id) {
+        Speaker speaker = findSpeakerById(speakers, id);
+        speakers.remove(speaker);
+    }
+
+    @Override
+    public void deleteAll() {
+        speakers.clear();
     }
 
     private Speaker findSpeakerById(List<Speaker> speakers, Long id) {
