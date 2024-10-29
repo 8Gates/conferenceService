@@ -9,6 +9,7 @@ public class SpeakerRepositoryStub implements SpeakerRepository {
     private static List<Speaker> speakers = new ArrayList<>();
     public SpeakerRepositoryStub(){
         // no argument constructor for testing purposes
+        /*
         Speaker speaker1 = new Speaker();
         speaker1.setId(1L);
         speaker1.setName("XNL-350");
@@ -20,6 +21,7 @@ public class SpeakerRepositoryStub implements SpeakerRepository {
         speaker2.setName("JBR-8090");
         speaker2.setCompany("Samsung");
         speakers.add(speaker2);
+        */
     }
     @Override
     public List<Speaker> findAll(){
