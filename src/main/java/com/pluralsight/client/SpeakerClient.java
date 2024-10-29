@@ -35,12 +35,19 @@ public class SpeakerClient {
         return response.readEntity(new GenericType<List<Speaker>>(){});
     }
 
-    public Speaker post (Speaker speaker){
+    public Speaker post(Speaker speaker){
         Response response = client
                 .target(SPEAKER_URI)
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(speaker, MediaType.APPLICATION_JSON));
+        return response.readEntity(Speaker.class);
+    }
 
+    public Speaker put(Speaker speaker){
+        Response response = client
+                .target(SPEAKER_URI)
+                .request(MediaType.APPLICATION_JSON)
+                .put(Entity.entity(speaker, MediaType.APPLICATION_JSON));
         return response.readEntity(Speaker.class);
     }
 
@@ -60,5 +67,9 @@ public class SpeakerClient {
         speaker.setCompany("Amazon");
         speaker = client.post(speaker);
         System.out.println("SpeakerClient added new speaker "+ speaker.getName());
+
+        speaker.setCompany("Wayne Enterprises");
+        speaker=client.put(speaker);
+        System.out.println("Updated speaker company " + speaker.getCompany());
     }
 }
