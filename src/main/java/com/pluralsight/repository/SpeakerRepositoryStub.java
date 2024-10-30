@@ -4,6 +4,7 @@ import com.pluralsight.model.Speaker;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class SpeakerRepositoryStub implements SpeakerRepository {
     private static List<Speaker> speakers = new ArrayList<>();
@@ -59,6 +60,19 @@ public class SpeakerRepositoryStub implements SpeakerRepository {
     @Override
     public void deleteAll() {
         speakers.clear();
+    }
+
+    @Override
+    public List<Speaker> findByCompany(List<String> companies) {
+        List<Speaker> speakerList = new ArrayList<>();
+        for(String company:companies){
+            for(Speaker speaker: speakers){
+                if(Objects.equals(speaker.getCompany(), company)){
+                    speakerList.add(speaker);
+                }
+            }
+        }
+        return speakerList;
     }
 
     private Speaker findSpeakerById(List<Speaker> speakers, Long id) {

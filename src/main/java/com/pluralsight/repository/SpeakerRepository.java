@@ -16,4 +16,6 @@ public interface SpeakerRepository {
     void delete(Long id);
 
     void deleteAll();
+
+    List<Speaker> findByCompany(List<String> companies);
 }
