@@ -1,6 +1,7 @@
 package com.pluralsight.repository;
 
 import com.pluralsight.model.Speaker;
+import com.pluralsight.model.SpeakerSearch;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface SpeakerRepository {
     void deleteAll();
 
     List<Speaker> findByCompany(List<String> companies);
+
+    List<Speaker> findByConstraints(SpeakerSearch speakerSearch);
 }

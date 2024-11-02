@@ -5,6 +5,16 @@ public class Speaker {
     private String name;
     private String company;
 
+
+    public Speaker(){
+        this.name = null;
+        this.company = null;
+    }
+    public Speaker(String name, String company){
+        this.name = name;
+        this.company = company;
+    }
+
     public Long getId() {
         return id;
     }
